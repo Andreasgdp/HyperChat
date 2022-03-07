@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "654117915076",
+    "project_id": "hyperchat-282b7",
+    "storage_bucket": "hyperchat-282b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654117915076:android:92f1d599731e13f2c6fc91",
+        "android_client_info": {
+          "package_name": "com.example.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654117915076-5on1ps4aubqdp10qbdhqs6gul95kd1ik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc3yxpchXEnWsYhFympvw61Uc2In8PNXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654117915076-5on1ps4aubqdp10qbdhqs6gul95kd1ik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

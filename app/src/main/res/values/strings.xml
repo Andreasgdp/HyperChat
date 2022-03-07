@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Chat</string>
+    <string name="input_username">Username</string>
+    <string name="input_email">Email</string>
+    <string name="input_password">Password</string>
+    <string name="text_sign_up">Already have an account?</string>
+    <string name="text_sign_in">Click to Sign Up</string>
+    <string name="btn_google">Google</string>
+    <string name="btn_facebook">Facebook</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="btn_sign_in">Sign In</string>
+</resources>
