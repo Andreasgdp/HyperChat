@@ -26,7 +26,6 @@ class SignInActivity : AppCompatActivity() {
             goToActivity(MainActivity::class.java)
         } else {
             // Load sign in activity if user is not logged in
-            setContentView(R.layout.activity_sign_in)
             binding = ActivitySignInBinding.inflate(layoutInflater)
             val view = binding.root
             setContentView(view)
@@ -53,12 +52,12 @@ class SignInActivity : AppCompatActivity() {
             binding.loadingBar.isVisible = true
 
             // Log User in.
-            userService.logUserIn(
+            userService.signIn(
                 binding.inputEmail.text.toString(),
                 binding.inputPassword.text.toString(),
                 object :
                     UserService.ResponseCallback {
-                    override fun onSuccess(user: User) {
+                    override fun onSuccess(user: User?) {
                         Toast.makeText(applicationContext, "Sign In Successful", Toast.LENGTH_SHORT)
                             .show()
                         val intent = Intent(this@SignInActivity, MainActivity::class.java)

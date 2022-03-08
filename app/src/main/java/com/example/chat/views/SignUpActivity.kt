@@ -47,7 +47,7 @@ class SignUpActivity : AppCompatActivity() {
 
             userService.createUser(binding.inputUsername.text.toString(), binding.inputEmail.text.toString(), binding.inputPassword.text.toString(),object :
                 UserService.ResponseCallback {
-                override fun onSuccess(user: User) {
+                override fun onSuccess(user: User?) {
                     Toast.makeText(applicationContext, "Sign Up Successful", Toast.LENGTH_SHORT).show()
                 }
 
