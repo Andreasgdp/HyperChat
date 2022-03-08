@@ -1,6 +1,7 @@
 package com.example.chat.views
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -30,6 +31,7 @@ class SignUpActivity : AppCompatActivity() {
         supportActionBar?.hide();
 
         binding.btnSignup.setOnClickListener{ signUp() };
+        binding.textSignin.setOnClickListener { goToActivity(SignInActivity::class.java) }
     }
 
     private fun signUp() {
@@ -44,20 +46,16 @@ class SignUpActivity : AppCompatActivity() {
             binding.loadingBar.isVisible = true;
 
             userService.createUser(binding.inputUsername.text.toString(), binding.inputEmail.text.toString(), binding.inputPassword.text.toString(),object :
-                UserService.CreateUserCallback {
-                override fun onSignUpSuccess(user: User) {
+                UserService.ResponseCallback {
+                override fun onSuccess(user: User) {
                     Toast.makeText(applicationContext, "Sign Up Successful", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onSignUpFail(exception: String?) {
+                override fun onFail(exception: String?) {
                     Toast.makeText(applicationContext, exception, Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onTest(test: String?) {
-                    Toast.makeText(applicationContext, test, Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onSignUpDone() {
+                override fun onComplete() {
                     binding.loadingBar.isVisible = false;
                 }
             })
@@ -68,6 +66,11 @@ class SignUpActivity : AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "Enter Credentials!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun goToActivity(activity: Class<*>) {
+        val intent = Intent(this, activity)
+        startActivity(intent)
     }
 
 }

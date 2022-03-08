@@ -11,18 +11,17 @@ class UserService {
     private val database = Firebase.database("https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app/")
     private val usersRef = database.getReference("Users")
 
-    interface CreateUserCallback {
-        fun onSignUpSuccess(user: User)
-        fun onSignUpFail(exception: String?)
-        fun onTest(test: String?)
-        fun onSignUpDone()
+    interface ResponseCallback {
+        fun onSuccess(user: User)
+        fun onFail(exception: String?)
+        fun onComplete()
     }
 
     fun createUser(
         username: String,
         email: String,
         password: String,
-        callbackCreate: CreateUserCallback
+        callback: ResponseCallback
     ) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -34,12 +33,35 @@ class UserService {
                     user.userId = uid;
                 }
 
-                callbackCreate.onSignUpSuccess(user);
+                callback.onSuccess(user);
             } else {
-                callbackCreate.onSignUpFail(task.exception.toString());
+                callback.onFail(task.exception.toString());
             }
 
-            callbackCreate.onSignUpDone();
+            callback.onComplete();
         };
+    }
+
+    fun logUserIn(
+        email: String,
+        password: String,
+        callback: ResponseCallback
+    ) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val user = User(email, password);
+
+                callback.onSuccess(user);
+            } else {
+                callback.onFail(task.exception.toString());
+            }
+
+            callback.onComplete();
+        };
+    }
+
+    fun isLoggedIn(): Boolean {
+        Log.i("ninja", auth.currentUser.toString())
+        return auth.currentUser != null;
     }
 }
