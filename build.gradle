@@ -1,6 +1,7 @@
 buildscript {
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.10'
+        // https://stackoverflow.com/questions/37810552/cannot-resolve-symbol-default-web-client-id-in-firebases-android-codelab
+        classpath 'com.google.gms:google-services:4.3.5'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

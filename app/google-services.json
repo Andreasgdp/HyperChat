@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "654117915076",
+    "firebase_url": "https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "hyperchat-282b7",
     "storage_bucket": "hyperchat-282b7.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "654117915076-5chfebifik3e0mgu6t2ad4ht39dv1v3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat",
+            "certificate_hash": "4bb29ce95ca3c07d8f592cd66da56accb5dd154e"
+          }
+        },
         {
           "client_id": "654117915076-5on1ps4aubqdp10qbdhqs6gul95kd1ik.apps.googleusercontent.com",
           "client_type": 3
