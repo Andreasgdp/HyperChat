@@ -1,6 +1,5 @@
 package com.example.chat.repository
 
-import android.util.Log
 import com.example.chat.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -20,7 +19,7 @@ class UserService {
         fun onComplete()
     }
 
-    fun createUser(
+    fun createUserAndSignIn(
         username: String,
         email: String,
         password: String,
@@ -35,13 +34,24 @@ class UserService {
                     usersRef.child(uid).setValue(user)
                     user.userId = uid
                 }
+                signIn(email, password, object : ResponseCallback {
+                    override fun onSuccess(user: User?) {
+                        callback.onSuccess(user)
+                    }
 
-                callback.onSuccess(user)
+                    override fun onFail(exception: String?) {
+                        callback.onFail(task.exception.toString())
+                    }
+
+                    override fun onComplete() {
+                        callback.onComplete()
+                    }
+                })
+
             } else {
                 callback.onFail(task.exception.toString())
             }
 
-            callback.onComplete()
         }
     }
 
@@ -75,11 +85,12 @@ class UserService {
     fun signOut(callback: SignOutCallback) {
         auth.signOut()
         thread {
-            var count = 0
+            var count = 1
             while (isLoggedIn()) {
                 Thread.sleep(100)
                 if (count >= 10) {
                     callback.onFail("TimeOutException: Failed to sign out user")
+                    return@thread
                 }
                 count++
             }

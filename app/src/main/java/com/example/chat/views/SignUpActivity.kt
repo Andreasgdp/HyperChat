@@ -1,7 +1,6 @@
 package com.example.chat.views
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -10,28 +9,31 @@ import androidx.core.view.isVisible
 import com.example.chat.databinding.ActivitySignUpBinding
 import com.example.chat.models.User
 import com.example.chat.repository.UserService
+import utils.ActivityRouting
 
 class SignUpActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var userService: UserService
+    private lateinit var activityRouting: ActivityRouting
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityRouting = ActivityRouting(this)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         // don't show progressbar
-        binding.loadingBar.isVisible = false;
+        binding.loadingBar.isVisible = false
 
-        userService = UserService();
+        userService = UserService()
 
-        supportActionBar?.hide();
+        supportActionBar?.hide()
 
-        binding.btnSignup.setOnClickListener{ signUp() };
-        binding.textSignin.setOnClickListener { goToActivity(SignInActivity::class.java) }
+        binding.btnSignup.setOnClickListener { signUp() }
+        binding.textSignin.setOnClickListener { activityRouting.goToActivity(SignInActivity::class.java) }
     }
 
     private fun signUp() {
@@ -43,34 +45,32 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             // show progressbar while creating account
-            binding.loadingBar.isVisible = true;
+            binding.loadingBar.isVisible = true
 
-            userService.createUser(binding.inputUsername.text.toString(), binding.inputEmail.text.toString(), binding.inputPassword.text.toString(),object :
-                UserService.ResponseCallback {
-                override fun onSuccess(user: User?) {
-                    Toast.makeText(applicationContext, "Sign Up Successful", Toast.LENGTH_SHORT).show()
-                }
+            userService.createUserAndSignIn(
+                binding.inputUsername.text.toString(),
+                binding.inputEmail.text.toString(),
+                binding.inputPassword.text.toString(),
+                object :
+                    UserService.ResponseCallback {
+                    override fun onSuccess(user: User?) {
+                        Toast.makeText(applicationContext, "Sign Up Successful", Toast.LENGTH_SHORT)
+                            .show()
+                        activityRouting.clearCurrentAndGoToActivity(MainActivity::class.java)
+                    }
 
-                override fun onFail(exception: String?) {
-                    Toast.makeText(applicationContext, exception, Toast.LENGTH_SHORT).show()
-                }
+                    override fun onFail(exception: String?) {
+                        Toast.makeText(applicationContext, exception, Toast.LENGTH_SHORT).show()
+                    }
 
-                override fun onComplete() {
-                    binding.loadingBar.isVisible = false;
-                }
-            })
-
-
-
-
+                    override fun onComplete() {
+                        binding.loadingBar.isVisible = false
+                    }
+                })
         } else {
             Toast.makeText(applicationContext, "Enter Credentials!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun goToActivity(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        startActivity(intent)
-    }
 
 }

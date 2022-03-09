@@ -1,29 +1,30 @@
 package com.example.chat.views
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.example.chat.R
 import com.example.chat.databinding.ActivitySignInBinding
 import com.example.chat.models.User
 import com.example.chat.repository.UserService
+import utils.ActivityRouting
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
     private lateinit var userService: UserService
+    private lateinit var activityRouting: ActivityRouting
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityRouting = ActivityRouting(this)
 
         userService = UserService()
         if (userService.isLoggedIn()) {
             // Move to main activity if user is logged in
-            goToActivity(MainActivity::class.java)
+            activityRouting.clearCurrentAndGoToActivity(MainActivity::class.java)
         } else {
             // Load sign in activity if user is not logged in
             binding = ActivitySignInBinding.inflate(layoutInflater)
@@ -36,7 +37,7 @@ class SignInActivity : AppCompatActivity() {
             supportActionBar?.hide()
 
             binding.btnSignin.setOnClickListener { signIn() }
-            binding.textSignup.setOnClickListener { goToActivity(SignUpActivity::class.java) }
+            binding.textSignup.setOnClickListener { activityRouting.goToActivity(SignUpActivity::class.java) }
         }
     }
 
@@ -60,8 +61,7 @@ class SignInActivity : AppCompatActivity() {
                     override fun onSuccess(user: User?) {
                         Toast.makeText(applicationContext, "Sign In Successful", Toast.LENGTH_SHORT)
                             .show()
-                        val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                        startActivity(intent)
+                        activityRouting.clearCurrentAndGoToActivity(MainActivity::class.java)
                     }
 
                     override fun onFail(exception: String?) {
@@ -76,10 +76,5 @@ class SignInActivity : AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "Enter Credentials!", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun goToActivity(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        startActivity(intent)
     }
 }

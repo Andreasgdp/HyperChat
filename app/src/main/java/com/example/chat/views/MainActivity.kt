@@ -9,14 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.chat.R
 import com.example.chat.databinding.ActivityMainBinding
 import com.example.chat.repository.UserService
+import utils.ActivityRouting
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var userService: UserService
+    private lateinit var activityRouting: ActivityRouting
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityRouting = ActivityRouting(this)
         userService = UserService()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_log_out -> {
                 userService.signOut(object : UserService.SignOutCallback {
                     override fun onSuccess() {
-                        goToActivity(SignInActivity::class.java)
+                        activityRouting.clearCurrentAndGoToActivity(SignInActivity::class.java)
                     }
 
                     override fun onFail(exception: String?) {
@@ -52,16 +55,11 @@ class MainActivity : AppCompatActivity() {
 
                 })
             }
-            else -> { // Note the block
+            else -> { // Default switch case
                 Toast.makeText(applicationContext, "Err in selecting option", Toast.LENGTH_SHORT)
                     .show()
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun goToActivity(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        startActivity(intent)
     }
 }
