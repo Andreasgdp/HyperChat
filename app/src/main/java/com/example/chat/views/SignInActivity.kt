@@ -28,10 +28,6 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var userService: UserService
     private lateinit var activityRouting: ActivityRouting
     private lateinit var googleSignInClient: GoogleSignInClient
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val database =
-        Firebase.database("https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app/")
-    private val usersRef = database.getReference("Users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,37 +109,25 @@ class SignInActivity : AppCompatActivity() {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)!!
-                Log.d("TAG", "firebaseAuthWithGoogle:" + account.id)
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Log.w("TAG", "Google sign in failed", e)
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "signInWithCredential:success")
-                    val user = auth.currentUser
-                    val ourUser = User()
-                    ourUser.userId = user?.uid
-                    ourUser.userName = user?.displayName
-                    ourUser.profilePic = user?.photoUrl.toString()
-                    user?.uid?.let { usersRef.child(it).setValue(ourUser) }
+            // show progressbar while creating account
+            binding.loadingBar.isVisible = true
+            userService.signInWithGoogle(this, data, object: UserService.ResponseCallback {
+                override fun onSuccess(user: User?) {
+                    Toast.makeText(applicationContext, "Sign In Successful", Toast.LENGTH_SHORT)
+                        .show()
                     activityRouting.clearCurrentAndGoToActivity(MainActivity::class.java)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("TAG", "signInWithCredential:failure", task.exception)
                 }
-            }
+
+                override fun onFail(exception: String?) {
+                    Toast.makeText(applicationContext, exception, Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onComplete() {
+                    binding.loadingBar.isVisible = false
+                }
+
+            })
+        }
     }
 }
