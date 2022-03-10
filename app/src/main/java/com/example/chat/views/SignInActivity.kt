@@ -3,23 +3,13 @@ package com.example.chat.views
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.example.chat.R
 import com.example.chat.databinding.ActivitySignInBinding
 import com.example.chat.models.User
 import com.example.chat.repository.UserService
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import utils.ActivityRouting
 
 class SignInActivity : AppCompatActivity() {
@@ -27,13 +17,12 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var userService: UserService
     private lateinit var activityRouting: ActivityRouting
-    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRouting = ActivityRouting(this)
 
-        userService = UserService()
+        userService = UserService(this)
         if (userService.isLoggedIn()) {
             // Move to main activity if user is logged in
             activityRouting.clearCurrentAndGoToActivity(MainActivity::class.java)
@@ -47,13 +36,6 @@ class SignInActivity : AppCompatActivity() {
             binding.loadingBar.isVisible = false
 
             supportActionBar?.hide()
-
-            // Configure Google Sign In
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-            googleSignInClient = GoogleSignIn.getClient(this, gso)
 
             binding.btnSignin.setOnClickListener { signIn() }
             binding.textSignup.setOnClickListener { activityRouting.goToActivity(SignUpActivity::class.java) }
@@ -100,7 +82,7 @@ class SignInActivity : AppCompatActivity() {
 
     private val RC_SIGN_IN = 65
     private fun signInGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
+        val signInIntent = userService.googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 

@@ -28,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
         // don't show progressbar
         binding.loadingBar.isVisible = false
 
-        userService = UserService()
+        userService = UserService(this)
 
         supportActionBar?.hide()
 

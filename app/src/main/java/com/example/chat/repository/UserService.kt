@@ -1,11 +1,15 @@
 package com.example.chat.repository
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.example.chat.R
 import com.example.chat.models.User
 import com.example.chat.views.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -14,11 +18,21 @@ import com.google.firebase.ktx.Firebase
 import kotlin.concurrent.thread
 
 
-class UserService {
+class UserService(context: Context) {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val database =
         Firebase.database("https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app/")
     private val usersRef = database.getReference("Users")
+    var googleSignInClient: GoogleSignInClient
+
+    init {
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(context, gso)
+    }
 
     interface ResponseCallback {
         fun onSuccess(user: User?)
@@ -91,6 +105,7 @@ class UserService {
 
     fun signOut(callback: SignOutCallback) {
         auth.signOut()
+        googleSignInClient.signOut()
         thread {
             var count = 1
             while (isLoggedIn()) {
@@ -105,7 +120,7 @@ class UserService {
         }
     }
 
-    fun signInWithGoogle(activity: Activity, data: Intent?, callback: ResponseCallback){
+    fun signInWithGoogle(activity: Activity, data: Intent?, callback: ResponseCallback) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
         try {
             // Google Sign In was successful, authenticate with Firebase
@@ -130,6 +145,7 @@ class UserService {
                 }
         } catch (e: ApiException) {
             callback.onFail(e.toString())
+            callback.onComplete()
         }
     }
 }

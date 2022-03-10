@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRouting = ActivityRouting(this)
-        userService = UserService()
+        userService = UserService(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
