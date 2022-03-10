@@ -1,5 +1,7 @@
 # HyperChat
 
+A native android instant messaging app that aim to be combine all the features of popular instant messaging apps.
+
 ## Getting started
 
 ### Prerequisites
