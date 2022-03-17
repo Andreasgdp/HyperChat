@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jacob/Desktop/HyperChat/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/Jacob/Desktop/HyperChat/app/src/main/res/layout/activity_sign_in.xml" value="0.5" />
+        <entry key="..\:/Users/Jacob/Desktop/HyperChat/app/src/main/res/layout/activity_sign_up.xml" value="0.5" />
         <entry key="..\:/Users/Jacob/Desktop/HyperChat/app/src/main/res/layout/fragment_sign_in.xml" value="0.5" />
+        <entry key="..\:/Users/Jacob/Desktop/HyperChat/app/src/main/res/layout/fragment_sign_up.xml" value="0.5" />
         <entry key="..\:/Users/Jacob/Documents/GitHub/4. Semester/Android-course/Project Messaging App/Chat/app/src/main/res/layout/activity_sign_in.xml" value="0.5" />
         <entry key="..\:/Users/Jacob/Documents/GitHub/4. Semester/Android-course/Project Messaging App/Chat/app/src/main/res/layout/activity_sign_up.xml" value="0.5" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/Chat/app/src/main/res/drawable/about.xml" value="0.2805" />
