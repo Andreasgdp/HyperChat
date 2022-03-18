@@ -2,7 +2,7 @@
 
 A native android instant messaging app that aim to be combine all the features of popular instant messaging apps.
 
-## Structure
+## Structure - Android JetPack
  - One main activity
  - All screens are fragments or multiple fragments
  - The data being displayed in the fragments are gotten through live data through ViewModels bound to the main activity, which all fragments has access to
