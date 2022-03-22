@@ -1,6 +1,9 @@
 package com.example.chat.viewModels
 
+import android.app.Activity
 import android.app.Application
+import android.content.Intent
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.models.User
@@ -13,6 +16,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     var userData: MutableLiveData<User?> = repository.firebaseUserMutableLiveData
     val loggedOutStatus: MutableLiveData<Boolean> = repository.userLoggedOutMutableLiveData
     val authDone: MutableLiveData<Boolean> = repository.authDoneMutableLiveData
+    val googleSignInClient = repository.googleSignInClient;
 
     fun register(email: String?, pass: String?, username: String?) {
         repository.register(email, pass, username)
@@ -20,6 +24,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signIn(email: String?, pass: String?) {
         repository.login(email, pass)
+    }
+
+    fun signInWithGoogle(activity: Activity, data: Intent?) {
+        repository.signInWithGoogle(activity, data)
     }
 
     fun signOut() {

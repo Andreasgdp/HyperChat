@@ -1,5 +1,6 @@
 package com.example.chat.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -50,6 +51,24 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 Toast.makeText(activity, "Enter Credentials!", Toast.LENGTH_SHORT).show()
             }
         })
+
+        binding.btnGoogle.setOnClickListener { signInWithGoogle() }
+    }
+
+    private val RC_SIGN_IN = 65
+    private fun signInWithGoogle() {
+        startActivityForResult(viewModel.googleSignInClient.signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // show progressbar while creating account
+            fragmentSignInBinding?.loadingBar?.isVisible = true
+            activity?.let { viewModel.signInWithGoogle(it, data) }
+        }
     }
 
     override fun onDestroyView() {
