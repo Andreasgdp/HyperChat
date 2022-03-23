@@ -56,6 +56,12 @@ dependencies {
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
+    // Circular image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Handle images
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
