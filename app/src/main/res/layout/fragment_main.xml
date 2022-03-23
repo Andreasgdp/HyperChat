@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".views.SignUpActivity">
 
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_menu_log_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/colorPrimary"
+        android:theme="@style/Theme.Chat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@color/white"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white"
+        app:titleMarginStart="32dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
