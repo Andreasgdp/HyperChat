@@ -2,11 +2,11 @@ package com.example.chat.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.chat.subViews.mainFragment.BefriendFragment
 import com.example.chat.subViews.mainFragment.ChatsFragment
 
-class MainFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class MainFragmentAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
     override fun getCount(): Int {
         return 2
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.chat.R
@@ -19,12 +20,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var fragmentSignUpBinding: FragmentMainBinding? = null
     private val viewModel: AuthViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentMainBinding.bind(view)
+        fragmentSignUpBinding = binding
+
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
 
         toolbar.inflateMenu(R.menu.menu)
@@ -48,14 +48,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             true
         }
 
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentMainBinding.bind(view)
-        fragmentSignUpBinding = binding
-
         viewModel.loggedOutStatus.observe(
             viewLifecycleOwner
         ) { loggedOut ->
@@ -64,7 +56,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
 
-        fragmentSignUpBinding!!.viewPager.adapter = MainFragmentAdapter(parentFragmentManager)
+        fragmentSignUpBinding!!.viewPager.adapter = MainFragmentAdapter(childFragmentManager)
         fragmentSignUpBinding!!.tabLayout.setupWithViewPager(fragmentSignUpBinding!!.viewPager)
     }
 

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
 import com.example.chat.models.User
+import com.example.chat.views.MainFragmentDirections
 import com.squareup.picasso.Picasso
 
 class UsersAdapter(_list: ArrayList<User>, _context: Context): RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
@@ -16,10 +18,10 @@ class UsersAdapter(_list: ArrayList<User>, _context: Context): RecyclerView.Adap
     private val list: ArrayList<User> = _list
     private val context: Context = _context
 
-    public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        public val image: ImageView = itemView.findViewById(R.id.list_profile_image)
-        public val userName: TextView = itemView.findViewById(R.id.list_user_name)
-        public val lastMessage: TextView = itemView.findViewById(R.id.list_last_message)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val image: ImageView = itemView.findViewById(R.id.list_profile_image)
+        val userName: TextView = itemView.findViewById(R.id.list_user_name)
+        val lastMessage: TextView = itemView.findViewById(R.id.list_last_message)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +33,10 @@ class UsersAdapter(_list: ArrayList<User>, _context: Context): RecyclerView.Adap
         val user = list[position]
         Picasso.get().load(user.profilePic).placeholder((R.drawable.avatar4)).into(holder.image)
         holder.userName.text = user.userName
+
+        holder.itemView.setOnClickListener { view ->
+            findNavController(view).navigate(MainFragmentDirections.actionMainFragmentToActiveChatFragment(user.userId.toString(), user.userName.toString(), user.profilePic.toString()))
+        }
     }
 
     override fun getItemCount(): Int {

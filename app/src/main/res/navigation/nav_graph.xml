@@ -37,5 +37,24 @@
         <action
             android:id="@+id/action_mainFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_activeChatFragment"
+            app:destination="@id/activeChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/activeChatFragment"
+        android:name="com.example.chat.views.ActiveChatFragment"
+        android:label="fragment_active_chat"
+        tools:layout="@layout/fragment_active_chat" >
+        <action
+            android:id="@+id/action_activeChatFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+        <argument android:name="profilePic" />
     </fragment>
 </navigation>
