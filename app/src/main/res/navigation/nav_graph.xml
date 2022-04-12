@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/initLoadingFragment">
 
     <fragment
         tools:layout="@layout/fragment_sign_in"
@@ -56,5 +56,17 @@
             android:name="userName"
             app:argType="string" />
         <argument android:name="profilePic" />
+    </fragment>
+    <fragment
+        android:id="@+id/initLoadingFragment"
+        android:name="com.example.chat.views.InitLoadingFragment"
+        android:label="fragment_init_loading"
+        tools:layout="@layout/fragment_init_loading" >
+        <action
+            android:id="@+id/action_initLoadingFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_initLoadingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

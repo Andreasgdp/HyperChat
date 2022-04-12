@@ -26,6 +26,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         repository.login(email, pass)
     }
 
+    fun checkSignedIn() {
+        repository.checkSignedIn()
+    }
+
     fun signInWithGoogle(activity: Activity, data: Intent?) {
         repository.signInWithGoogle(activity, data)
     }

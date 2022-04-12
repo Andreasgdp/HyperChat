@@ -84,6 +84,15 @@ class AuthRepository(private val application: Application) {
         userLoggedOutMutableLiveData.postValue(true)
     }
 
+    fun checkSignedIn() {
+        if (auth.currentUser != null) {
+            val currUser = User(email = auth.currentUser?.email)
+            firebaseUserMutableLiveData.postValue(currUser)
+        } else {
+            firebaseUserMutableLiveData.postValue(null)
+        }
+    }
+
     fun signInWithGoogle(activity: Activity, data: Intent?) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
         try {
