@@ -6,16 +6,13 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chat.R
 import com.example.chat.databinding.ActivityMainBinding
-import com.example.chat.repository.UserService
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var userService: UserService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userService = UserService(this)
 
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
