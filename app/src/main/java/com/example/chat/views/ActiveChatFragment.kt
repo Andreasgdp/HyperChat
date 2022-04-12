@@ -62,6 +62,7 @@ class ActiveChatFragment : Fragment(R.layout.fragment_active_chat) {
         binding.chatRecyclerView.adapter = chatAdapter
 
         val layoutManager = LinearLayoutManager(context)
+        layoutManager.reverseLayout = true
         fragmentActiveChatBinding!!.chatRecyclerView.layoutManager = layoutManager
 
         val senderRoom = senderId + receiverId
@@ -70,7 +71,7 @@ class ActiveChatFragment : Fragment(R.layout.fragment_active_chat) {
         chatsRef.child(senderRoom).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 messages.clear()
-                for (snapshot in dataSnapshot.children) {
+                for (snapshot in dataSnapshot.children.reversed()) {
                     val model: Message? = snapshot.getValue(Message::class.java)
                     model!!.messageId = snapshot.key
                     messages.add(model)
@@ -89,16 +90,13 @@ class ActiveChatFragment : Fragment(R.layout.fragment_active_chat) {
             if (message.isEmpty()) {
                 return@setOnClickListener
             }
-            val sdf = SimpleDateFormat("hh:mm")
+            val sdf = SimpleDateFormat("h:mm a")
             val model =
                 Message(uId = senderId, message = message, timestamp = sdf.format(Date()))
             binding.enterMessage.setText("")
 
             chatsRef.child(senderRoom).push().setValue(model).addOnSuccessListener {
-                chatsRef.child(receiverRoom).push().setValue(model).addOnSuccessListener {
-                    Toast.makeText(context, "Message send!", Toast.LENGTH_SHORT)
-                        .show()
-                }
+                chatsRef.child(receiverRoom).push().setValue(model)
             }
         }
     }

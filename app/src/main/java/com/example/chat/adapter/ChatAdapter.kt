@@ -1,6 +1,8 @@
 package com.example.chat.adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
 import com.example.chat.models.Message
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: String) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -48,7 +52,25 @@ class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: Str
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messages[position]
 
+        holder.itemView.setOnLongClickListener {
+            if (message.uId == receiverId) {
+                return@setOnLongClickListener false
+            }
+            val alertDialogBuilder = AlertDialog.Builder(context)
+            alertDialogBuilder.setTitle("Delete")
+                .setMessage("Are you sure you want to delete this message?")
+                .setPositiveButton("Yes", DialogInterface.OnClickListener { dialogInterface, i ->
+                    val database =
+                        Firebase.database("https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app/")
+                    val senderRoom = FirebaseAuth.getInstance().uid + receiverId
+                    val chatsRef = database.getReference("Chats")
+                    message.messageId?.let { messageId -> chatsRef.child(senderRoom).child(messageId).setValue(null) }
+                }).setNegativeButton("No", DialogInterface.OnClickListener { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }).show()
 
+            return@setOnLongClickListener false
+        }
 
         if (holder is SenderViewHolder) {
             holder.msg.text = message.message

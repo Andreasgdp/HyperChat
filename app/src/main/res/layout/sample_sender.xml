@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
-    android:layout_marginEnd="5dp">
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -14,13 +15,6 @@
         android:minHeight="30dp"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
-
         <TextView
             android:id="@+id/sender_text"
             android:layout_width="wrap_content"
@@ -29,11 +23,11 @@
             android:inputType="textLongMessage|textMultiLine"
             android:maxWidth="270dp"
             android:minWidth="50dp"
-            android:text="Some Long ass text mother fucker sdfksdlfhjasdfnasdfdasfj kadnfk jasdnf kasdjf"
+            android:text="Some Long ass text das dsa das d asf asd gadg afdg dfg df gadf ga fdg afdg asdf af fd adf dsa fgdas fads f dasgf adfg fdsg sdfg sdf hgs h fdsh sfdh fsdh sfdh fsdh fsdhfsdh fs gsdfg g g fg        gf dfgs gsfd g sdg sdg sdfg sfd gsfdg g f g sdfg gf g f gfsd gfsd fgs fgsd hf hsfgd hsgf h h fh s hs hsfg hg fh gsfh gsfh sgfh gsfh sfg h sgfh sgfh sfgh sgh s hfgs h fh fsh fsdgh fd h sfh fdh sfdh fds hf gh fsdh sfdh fsd hfs dh fsdh fdsh h "
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/sender_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
