@@ -6,9 +6,6 @@
         android:id="@+id/menu_settings"
         android:title="@string/text_menu_settings" />
     <item
-        android:id="@+id/menu_grup_chat"
-        android:title="@string/text_menu_group_chat" />
-    <item
         android:id="@+id/menu_log_out"
         android:title="@string/text_menu_log_out" />
 </menu>

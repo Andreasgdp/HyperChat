@@ -1,13 +1,10 @@
 package com.example.chat.views
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.chat.R
@@ -32,10 +29,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             // switch case in kotlin
             when (it.itemId) {
                 R.id.menu_settings -> {
-                    Toast.makeText(requireActivity(), "Settings", Toast.LENGTH_SHORT).show()
-                }
-                R.id.menu_grup_chat -> {
-                    Toast.makeText(requireActivity(), "Group Chat", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(MainFragmentDirections.actionMainFragmentToSettingsFragment())
                 }
                 R.id.menu_log_out -> {
                     viewModel.signOut()

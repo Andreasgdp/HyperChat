@@ -41,6 +41,8 @@ android {
 dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-firestore:24.0.1'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
     def lifecycle_version = "2.5.0-alpha04"
     def arch_version = "2.1.0"
 
