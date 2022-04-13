@@ -5,6 +5,4 @@ data class Message(
     var message: String? = null,
     var messageId: String? = null,
     var timestamp: String? = null
-) {
-
-}
+)

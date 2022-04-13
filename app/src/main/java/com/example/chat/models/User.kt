@@ -8,6 +8,4 @@ data class User(
     var userId: String? = null,
     var lastMessage: String? = null,
     var status: String? = null
-) {
-
-}
+)

@@ -21,7 +21,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentSignUpBinding.bind(view)
-        fragmentSignUpBinding =  binding
+        fragmentSignUpBinding = binding
 
         viewModel.userData.observe(
             viewLifecycleOwner
@@ -35,7 +35,11 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             binding.loadingBar.isVisible = false
         }
 
-        binding.textSignin.setOnClickListener {findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())}
+        binding.textSignin.setOnClickListener {
+            findNavController().navigate(
+                SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()
+            )
+        }
 
         binding.btnSignup.setOnClickListener(View.OnClickListener {
             val email: String = binding.inputEmail.text.toString()

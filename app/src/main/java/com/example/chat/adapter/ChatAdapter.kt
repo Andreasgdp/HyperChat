@@ -10,12 +10,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
 import com.example.chat.models.Message
+import com.example.chat.repository.FirebaseRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: String) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val repository: FirebaseRepository = FirebaseRepository(_context)
     private val messages: ArrayList<Message> = _list
     private val context: Context = _context
     private val receiverId: String = _receiverId
@@ -60,11 +63,9 @@ class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: Str
             alertDialogBuilder.setTitle("Delete")
                 .setMessage("Are you sure you want to delete this message?")
                 .setPositiveButton("Yes", DialogInterface.OnClickListener { dialogInterface, i ->
-                    val database =
-                        Firebase.database("https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app/")
-                    val senderRoom = FirebaseAuth.getInstance().uid + receiverId
-                    val chatsRef = database.getReference("Chats")
-                    message.messageId?.let { messageId -> chatsRef.child(senderRoom).child(messageId).setValue(null) }
+                    repository.deleteMessage(message, receiverId)
+                    CoroutineScope(Dispatchers.IO).launch {
+                    }
                 }).setNegativeButton("No", DialogInterface.OnClickListener { dialogInterface, i ->
                     dialogInterface.dismiss()
                 }).show()

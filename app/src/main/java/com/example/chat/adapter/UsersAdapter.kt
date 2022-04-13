@@ -9,20 +9,15 @@ import android.widget.TextView
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
-import com.example.chat.models.Message
 import com.example.chat.models.User
+import com.example.chat.repository.FirebaseRepository
 import com.example.chat.views.MainFragmentDirections
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
 class UsersAdapter(_list: ArrayList<User>, _context: Context) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
+    private val repository: FirebaseRepository = FirebaseRepository(_context)
     private val list: ArrayList<User> = _list
     private val context: Context = _context
 
@@ -44,28 +39,7 @@ class UsersAdapter(_list: ArrayList<User>, _context: Context) :
         holder.userName.text = user.userName
 
 
-        val database =
-            Firebase.database("https://hyperchat-282b7-default-rtdb.europe-west1.firebasedatabase.app/")
-        val chatsRef = database.getReference("Chats")
-        chatsRef.child(FirebaseAuth.getInstance().uid + user.userId)
-            .orderByChild("timestamp").limitToLast(1)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val children = snapshot.children
-                    var model = Message();
-                    children.forEach {
-                        println(it.toString())
-                        model = it.getValue(Message::class.java)!!;
-                    }
-                    holder.lastMessage.text = model.message
-                    holder.lastMessageDate.text = model.timestamp
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+        repository.updateLastMessage(user, holder)
 
         holder.itemView.setOnClickListener { view ->
             findNavController(view).navigate(

@@ -9,25 +9,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.chat.R
 import com.example.chat.databinding.FragmentSettingsBinding
-import com.example.chat.models.User
-import com.example.chat.viewModels.AuthViewModel
+import com.example.chat.viewModels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import java.util.*
-import kotlin.collections.HashMap
 
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private var fragmentSettingsBinding: FragmentSettingsBinding? = null
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: UserViewModel by viewModels()
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -50,7 +44,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.btnSave.setOnClickListener {
-            if (!binding.inputAbout.text.toString().equals("") || !binding.inputUsernameChange.text.toString().equals("")) {
+            if (!binding.inputAbout.text.toString()
+                    .equals("") || !binding.inputUsernameChange.text.toString().equals("")
+            ) {
                 val about = binding.inputAbout.text.toString()
                 val username = binding.inputUsernameChange.text.toString()
 
@@ -59,26 +55,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 obj["userName"] = username
                 obj["status"] = about
 
-                database.reference.child("Users").child(FirebaseAuth.getInstance().uid!!).updateChildren(obj)
+                viewModel.updateInfo(obj)
             } else {
                 Toast.makeText(activity, "Enter Credentials!", Toast.LENGTH_SHORT).show()
             }
         }
 
-        database.reference.child("Users").child(FirebaseAuth.getInstance().uid!!)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
-                    Picasso.get().load(user!!.profilePic).placeholder(R.drawable.avatar4)
-                        .into(binding.listProfileImage3)
+        viewModel.getInfo()
+        viewModel.userData.observe(viewLifecycleOwner) { user ->
+            Picasso.get().load(user!!.profilePic).placeholder(R.drawable.avatar4)
+                .into(binding.listProfileImage3)
 
-                    binding.inputAbout.setText(user.status)
-                    binding.inputUsernameChange.setText(user.userName)
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-
-            })
+            binding.inputAbout.setText(user.status)
+            binding.inputUsernameChange.setText(user.userName)
+        }
 
         binding.profilePicAddBtn.setOnClickListener {
             val intent = Intent()
@@ -94,19 +84,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         if (data!!.data != null) {
             val sFile = data.data
             fragmentSettingsBinding!!.listProfileImage3.setImageURI(sFile)
-
-            val reference =
-                FirebaseAuth.getInstance().uid?.let { uid ->
-                    storage.reference.child("profile_pic").child(
-                        uid
-                    )
-                }
-            reference!!.putFile(sFile!!).addOnSuccessListener {
-                reference.downloadUrl.addOnSuccessListener {
-                    database.reference.child("Users").child(FirebaseAuth.getInstance().uid!!)
-                        .child("profilePic").setValue(it.toString())
-                }
-            }
+            viewModel.updateProfilePic(sFile)
         }
 
 
