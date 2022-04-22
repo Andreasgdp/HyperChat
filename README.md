@@ -1,7 +1,7 @@
 # HyperChat
 
 <p align="center">
-  <img width="460" height="150" src="https://user-images.githubusercontent.com/39928082/164708009-1a65d641-ac4d-46b2-981a-c0f7f723c9d0.png">
+  <img width="460" height="150" src="https://user-images.githubusercontent.com/39928082/164708343-a183b81b-fa61-4f9b-a095-4e89e9a986c9.png">
 </p>
 
 A native android instant messaging app that aim to be combine all the features of popular instant messaging apps.
