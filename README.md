@@ -1,5 +1,3 @@
-# HyperChat
-
 <p align="center">
   <img width="460" height="150" src="https://user-images.githubusercontent.com/39928082/164708343-a183b81b-fa61-4f9b-a095-4e89e9a986c9.png">
 </p>
