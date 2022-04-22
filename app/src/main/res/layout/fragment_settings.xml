@@ -66,14 +66,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/list_profile_image3"
         app:layout_constraintEnd_toEndOf="@+id/list_profile_image3" />
 
-    <ImageView
+    <Button
         android:id="@+id/btn_settings_back"
         style="@style/Theme.Chat"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/leftarrow"
+        android:background="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
