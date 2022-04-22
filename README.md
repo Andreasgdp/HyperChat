@@ -44,3 +44,5 @@ A native android instant messaging app that aim to be combine all the features o
 -  The app has a dark mode feature, which is used to change the color of the app to a dark mode. This is activated by the native android dark mode feature.
 
 ## Showcase
+https://user-images.githubusercontent.com/39928082/164706995-f463abdf-afec-4900-bd8f-b8485f1dcd96.mp4
+
