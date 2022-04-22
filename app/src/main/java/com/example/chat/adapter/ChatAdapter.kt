@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: String) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -63,8 +64,8 @@ class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: Str
             alertDialogBuilder.setTitle("Delete")
                 .setMessage("Are you sure you want to delete this message?")
                 .setPositiveButton("Yes", DialogInterface.OnClickListener { dialogInterface, i ->
-                    repository.deleteMessage(message, receiverId)
                     CoroutineScope(Dispatchers.IO).launch {
+                        repository.deleteMessage(message, receiverId)
                     }
                 }).setNegativeButton("No", DialogInterface.OnClickListener { dialogInterface, i ->
                     dialogInterface.dismiss()
@@ -75,10 +76,16 @@ class ChatAdapter(_list: ArrayList<Message>, _context: Context, _receiverId: Str
 
         if (holder is SenderViewHolder) {
             holder.msg.text = message.message
-            holder.time.text = message.timestamp.toString()
+            val sdf = SimpleDateFormat("h:mm a")
+            if (message.timestamp != null) {
+                holder.time.text = sdf.format(message.timestamp).toString()
+            }
         } else if (holder is ReceiverViewHolder) {
             holder.msg.text = message.message
-            holder.time.text = message.timestamp.toString()
+            val sdf = SimpleDateFormat("h:mm a")
+            if (message.timestamp != null) {
+                holder.time.text = sdf.format(message.timestamp).toString()
+            }
         }
     }
 

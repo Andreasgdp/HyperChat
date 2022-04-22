@@ -5,8 +5,11 @@ import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.chat.models.User
 import com.example.chat.repository.FirebaseRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,23 +20,33 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     val googleSignInClient = repository.googleSignInClient
 
     fun register(email: String?, pass: String?, username: String?) {
-        repository.register(email, pass, username)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.register(email, pass, username)
+        }
     }
 
     fun signIn(email: String?, pass: String?) {
-        repository.login(email, pass)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.login(email, pass)
+        }
     }
 
     fun checkSignedIn() {
-        repository.checkSignedIn()
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.checkSignedIn()
+        }
     }
 
     fun signInWithGoogle(activity: Activity, data: Intent?) {
-        repository.signInWithGoogle(activity, data)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.signInWithGoogle(activity, data)
+        }
     }
 
     fun signOut() {
-        repository.signOut()
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.signOut()
+        }
     }
 
 }

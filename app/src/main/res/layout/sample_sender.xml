@@ -8,6 +8,7 @@
     android:layout_marginBottom="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Theme.Chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/sender_bg"
@@ -17,6 +18,7 @@
 
         <TextView
             android:id="@+id/sender_text"
+            style="@style/Theme.Chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -32,6 +34,7 @@
 
         <TextView
             android:id="@+id/sender_time"
+            style="@style/Theme.Chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"

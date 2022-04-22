@@ -3,9 +3,12 @@ package com.example.chat.viewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.chat.models.Message
 import com.example.chat.models.User
 import com.example.chat.repository.FirebaseRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ChatViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,11 +18,15 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
         repository.firebaseChatMessagesMutableLiveData
 
     fun updateChatsList(list: ArrayList<User>) {
-        repository.updateChatsList(list)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateChatsList(list)
+        }
     }
 
     fun loadChatMessages(messages: ArrayList<Message>, senderRoom: String) {
-        repository.loadChatMessages(messages, senderRoom)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.listenToChatMessages(messages, senderRoom)
+        }
     }
 
     fun sendMessage(
@@ -27,7 +34,9 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
         senderRoom: String,
         receiverRoom: String
     ) {
-        repository.sendMessage(model, senderRoom, receiverRoom)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.sendMessage(model, senderRoom, receiverRoom)
+        }
     }
 
 }

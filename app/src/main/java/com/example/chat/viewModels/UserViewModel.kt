@@ -4,8 +4,11 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.chat.models.User
 import com.example.chat.repository.FirebaseRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
@@ -13,15 +16,21 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     var userData: MutableLiveData<User?> = repository.firebaseUserMutableLiveData
 
     fun updateInfo(obj: HashMap<String, Any>) {
-        repository.updateUserInfo(obj)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateUserInfo(obj)
+        }
     }
 
     fun updateProfilePic(profilePic: Uri?) {
-        repository.updateUserProfilePic(profilePic)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateUserProfilePic(profilePic)
+        }
     }
 
     fun getInfo() {
-        repository.getUserInfo()
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getUserInfo()
+        }
     }
 
 }

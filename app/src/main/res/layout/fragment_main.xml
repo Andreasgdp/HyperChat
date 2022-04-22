@@ -29,6 +29,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
+            style="@style/Theme.Chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
@@ -46,6 +47,7 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
+            style="@style/Theme.Chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingLeft="10dp"

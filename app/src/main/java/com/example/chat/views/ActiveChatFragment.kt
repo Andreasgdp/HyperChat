@@ -72,9 +72,8 @@ class ActiveChatFragment : Fragment(R.layout.fragment_active_chat) {
             if (message.isEmpty()) {
                 return@setOnClickListener
             }
-            val sdf = SimpleDateFormat("h:mm a")
             val model =
-                Message(uId = senderId, message = message, timestamp = sdf.format(Date()))
+                Message(uId = senderId, message = message, timestamp = Date().time)
             binding.enterMessage.setText("")
 
             viewModel.sendMessage(model, senderRoom, receiverRoom)

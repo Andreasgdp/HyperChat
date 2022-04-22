@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
 
 
 class FirebaseRepository(private val applicationContext: Context) {
@@ -209,7 +210,10 @@ class FirebaseRepository(private val applicationContext: Context) {
                         model = it.getValue(Message::class.java)!!
                     }
                     holder.lastMessage.text = model.message
-                    holder.lastMessageDate.text = model.timestamp
+                    val sdf = SimpleDateFormat("h:mm a")
+                    if (model.timestamp != null) {
+                        holder.lastMessageDate.text = sdf.format(model.timestamp).toString()
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -227,11 +231,23 @@ class FirebaseRepository(private val applicationContext: Context) {
                     val user: User? = snapShot.getValue(User::class.java)
                     user!!.userId = snapShot.key
 
+                    // Get latest message timestamp from userId
+                    val message = Message()
+                    val senderRoom = auth.currentUser!!.uid + user.userId
+                    getLastChatMessage(message, senderRoom)
+
+                    // Update user with sortingTimestamp
+                    user.sortingTimestamp = message.timestamp
+
                     // Use this method to remove the users from view, that is not connected with you
                     if (!user.userId.equals(FirebaseAuth.getInstance().uid)) {
                         list.add(user)
                     }
                 }
+
+                // Sort list of users based on user.sortingTimestamp
+                list.sortBy { it.sortingTimestamp }
+
                 firebaseChatsMutableLiveData.postValue(list)
             }
 
@@ -242,7 +258,20 @@ class FirebaseRepository(private val applicationContext: Context) {
         })
     }
 
-    fun loadChatMessages(messages: ArrayList<Message>, senderRoom: String) {
+    fun getLastChatMessage(messageToUpdate: Message, senderRoom: String) {
+        chatsRef.child(senderRoom).orderByKey().limitToLast(1).get().addOnSuccessListener {
+            if (!it.exists()) return@addOnSuccessListener
+
+            it.children.forEach { messageSnapshot ->
+                val message = messageSnapshot.getValue(Message::class.java)
+                messageToUpdate.uId = message!!.uId
+                messageToUpdate.message = message.message
+                messageToUpdate.timestamp = message.timestamp
+            }
+        }
+    }
+
+    fun listenToChatMessages(messages: ArrayList<Message>, senderRoom: String) {
         chatsRef.child(senderRoom).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 messages.clear()

@@ -8,6 +8,7 @@
 
     <EditText
         android:id="@+id/input_username"
+        style="@style/Theme.Chat"
         android:layout_width="297dp"
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
@@ -20,6 +21,7 @@
 
     <EditText
         android:id="@+id/input_email"
+        style="@style/Theme.Chat"
         android:layout_width="297dp"
         android:layout_height="42dp"
         android:layout_marginTop="12dp"
@@ -32,6 +34,7 @@
 
     <EditText
         android:id="@+id/input_password"
+        style="@style/Theme.Chat"
         android:layout_width="297dp"
         android:layout_height="45dp"
         android:layout_marginTop="12dp"
@@ -45,6 +48,7 @@
 
     <Button
         android:id="@+id/btn_signup"
+        style="@style/Theme.Chat"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -69,36 +73,38 @@
         android:id="@+id/linearLayout3"
         android:layout_width="300dp"
         android:layout_height="213dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_google"
+            style="@style/Theme.Chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/btn_google"
             app:backgroundTint="#DB4437"
             app:icon="@drawable/ic_google"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
-            app:iconTint="@null"
-            android:text="@string/btn_google" />
+            app:iconTint="@null" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_facebook"
+            style="@style/Theme.Chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/btn_facebook"
             app:backgroundTint="#4267B2"
             app:icon="@drawable/ic_facebook"
             app:iconGravity="textStart"
             app:iconPadding="10dp"
-            app:iconTint="@null"
-            android:text="@string/btn_facebook" />
+            app:iconTint="@null" />
     </LinearLayout>
 
     <LinearLayout
@@ -115,6 +121,7 @@
 
         <TextView
             android:id="@+id/text_signin"
+            style="@style/Theme.Chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -124,15 +131,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="300dp"
         android:layout_height="19dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signup"
-        app:layout_constraintVertical_bias="0.666">
+        app:layout_constraintTop_toBottomOf="@+id/btn_signup">
 
         <View
             android:layout_width="120dp"
@@ -144,6 +151,7 @@
 
         <TextView
             android:id="@+id/textView3"
+            style="@style/Theme.Chat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

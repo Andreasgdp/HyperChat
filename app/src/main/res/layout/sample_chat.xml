@@ -11,39 +11,48 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/list_profile_image"
+        style="@style/Theme.Chat"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:padding="5dp"
         android:src="@drawable/avatar4" />
 
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="228dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/list_user_name"
+            style="@style/Theme.Chat"
             android:layout_width="284dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:ellipsize="end"
             android:text="Username"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="60dp"
+            app:autoSizeMinTextSize="40dp" />
 
         <TextView
             android:id="@+id/list_last_message"
-            android:layout_width="284dp"
+            style="@style/Theme.Chat"
+            android:layout_width="281dp"
             android:layout_height="20dp"
             android:layout_marginBottom="10dp"
-            android:text="Last Message"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:textSize="12sp" />
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="96dp"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
@@ -51,13 +60,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="27dp" />
+            app:layout_constraintGuide_end="16dp" />
 
         <TextView
             android:id="@+id/list_last_message_date"
+            style="@style/Theme.Chat"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="12:53 am"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

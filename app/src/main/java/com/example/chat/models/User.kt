@@ -7,5 +7,6 @@ data class User(
     var profilePic: String? = null,
     var userId: String? = null,
     var lastMessage: String? = null,
-    var status: String? = null
+    var status: String? = null,
+    var sortingTimestamp: Long? = null
 )

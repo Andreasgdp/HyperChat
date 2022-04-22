@@ -8,6 +8,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/list_profile_image3"
+        style="@style/Theme.Chat"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="156dp"
@@ -20,6 +21,7 @@
 
     <EditText
         android:id="@+id/input_username_change"
+        style="@style/Theme.Chat"
         android:layout_width="297dp"
         android:layout_height="42dp"
         android:layout_marginTop="40dp"
@@ -32,6 +34,7 @@
 
     <EditText
         android:id="@+id/input_about"
+        style="@style/Theme.Chat"
         android:layout_width="297dp"
         android:layout_height="45dp"
         android:layout_marginTop="40dp"
@@ -44,6 +47,7 @@
 
     <Button
         android:id="@+id/btn_save"
+        style="@style/Theme.Chat"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -55,6 +59,7 @@
 
     <ImageView
         android:id="@+id/profilePicAddBtn"
+        style="@style/Theme.Chat"
         android:layout_width="27dp"
         android:layout_height="27dp"
         android:src="@drawable/plus"
@@ -63,6 +68,7 @@
 
     <ImageView
         android:id="@+id/btn_settings_back"
+        style="@style/Theme.Chat"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
