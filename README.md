@@ -9,6 +9,7 @@ A native android instant messaging app that aim to be combine all the features o
 -   One main activity
 -   All screens are fragments or multiple fragments
 -   The data being displayed in the fragments are gotten through live data through ViewModels bound to the fragments.
+-   ViewBinding is used to more easily access the items on each view.
 -   There is a ViewModel for each screen (so the different content required for each different screen, will be handled by it's own separate ViewModel as far as the logic for the screens differ)
 -   For accessing external data, there will be created repositories for each different data service i.e. a repository for Firebase and maybe another repository, if another external data source is needed. (This is done to make the app more flexible and allow for the addition of new data sources). Currently, there is only one repository, but it can be extended to include more repositories.
 
